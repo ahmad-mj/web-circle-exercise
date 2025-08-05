@@ -8,6 +8,7 @@ import SearchField from "../components/SearchField/SearchField.jsx";
 
 const RestaurantView = () => {
   const [dishes, setDishes] = useState([]);
+  const [filteredDishes, setFilteredDishes] = useState([]);
 
   // useDebouncedCallback takes a function as a parameter and as the second parameter
   // the number of milliseconds it should wait until it is actually called so a user
@@ -29,11 +30,14 @@ const RestaurantView = () => {
       // The ?? operator turns 'undefined' or 'null' values into a preferred default value on the right side
       // We know that result.meals can be null if there are no results, so in that case, we provide an empty array for safety
       setDishes(result.meals ?? []);
+      console.log(result.meals[0].strMeal);
+      setFilteredDishes(result.meals ?? []);
     }).catch(() => {
       if (!currentEffect) {
         return;
       }
       setDishes([]);
+      setFilteredDishes([]);
     })
 
     // This cleanup function is to prevent multiple API calls coming back out of sequence and setting the value of our dishes list.
@@ -56,13 +60,13 @@ const RestaurantView = () => {
       <NavBar>
         <h1>ReDI React Restaurant</h1>
 
-        <SearchField />
+        <SearchField dishes={dishes} onFilter={setFilteredDishes}/>
       </NavBar>
 
       <div className={styles.restaurantWrapper}>
         <div className={styles.menu}>
-          {dishes.length > 0 ? (
-            dishes.map((dish) => (
+          {filteredDishes.length > 0 ? (
+            filteredDishes.map((dish) => (
               <MenuItem
                 dish={dish}
                 key={dish.idMeal}
