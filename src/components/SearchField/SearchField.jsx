@@ -1,29 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./SearchField.module.css";
-const meals = [{id: "1", mealName:"flafel" },{ id: "2", mealName:"hummus" }];
 
-const SearchField = () => {
+const SearchField = ({dishes, onFilter}) => {
   const [searchInput, setSearchInput] = useState("");
-  const [filterdMeals, setFilteredMeals] = useState(meals);
-  const handleChange = (e) => {
-    const userInput = e.target.value;
-    setSearchInput(userInput);
-  
-  console.log("searchInput: ",searchInput);
+  useEffect(() => {
+    if(!Array.isArray(dishes)) return;
+    const filteredMeals = dishes.filter(dish => dish.strMeal.toLowerCase().includes(searchInput.toLowerCase))
 
-  const filterMeals = meals.filter(meal => meal.mealName.includes(userInput))
-  setFilteredMeals(filterMeals)
+onFilter(filteredMeals)
+  }, [searchInput, dishes, onFilter]);
 
-  }
   return (
     <div className={styles.wrapper}>
       <input
         placeholder="Filter dishes..."
         type="text"     
-        onChange={handleChange}
+        onChange={(e) => setSearchInput(e.target.value)}
         value={searchInput}
       />
-      <ul>{filterdMeals.map(meal => <li key={meal.id}>{meal.mealName}</li>)}</ul>
     </div>
   );
 };
