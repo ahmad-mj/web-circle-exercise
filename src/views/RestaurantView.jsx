@@ -65,8 +65,8 @@ const RestaurantView = () => {
 
       <div className={styles.restaurantWrapper}>
         <div className={styles.menu}>
-          {dishes.length > 0 ? (
-            dishes.map((dish) => (
+          {filteredDishes.length > 0 ? (
+            filteredDishes.map((dish) => (
               <MenuItem
                 dish={dish}
                 key={dish.idMeal}
