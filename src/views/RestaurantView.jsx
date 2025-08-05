@@ -60,7 +60,7 @@ const RestaurantView = () => {
       <NavBar>
         <h1>ReDI React Restaurant</h1>
 
-        <SearchField />
+        <SearchField dishes={dishes} onFilter={setFilteredDishes}/>
       </NavBar>
 
       <div className={styles.restaurantWrapper}>
