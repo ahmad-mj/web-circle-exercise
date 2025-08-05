@@ -5,7 +5,7 @@ const SearchField = ({dishes, onFilter}) => {
   const [searchInput, setSearchInput] = useState("");
   useEffect(() => {
     if(!Array.isArray(dishes)) return;
-    const filteredMeals = dishes.filter(dish => dish.strMeal.toLowerCase().includes(searchInput.toLowerCase))
+    const filteredMeals = dishes.filter(dish => dish.strMeal.toLowerCase().includes(searchInput.toLowerCase()));
 
 onFilter(filteredMeals)
   }, [searchInput, dishes, onFilter]);
